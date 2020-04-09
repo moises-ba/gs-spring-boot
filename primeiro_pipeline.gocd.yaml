@@ -20,7 +20,7 @@ pipelines:
           type: success
           allow_only_on_success: false
         jobs:
-          primeiro_job:
+          grale_build_job:
             timeout: 0
             tasks:
             - exec:
