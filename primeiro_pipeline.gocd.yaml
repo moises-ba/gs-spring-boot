@@ -78,6 +78,13 @@ pipelines:
                 #- ${docker_hub_pass}
                 working_directory: initial
                 run_if: passed 
+            - exec:
+                command: docker
+                arguments:
+                - push
+                - moisesba/hello-world:0.0.1                  
+                working_directory: initial
+                run_if: passed 
     - deploy_homologacao_stage:
         fetch_materials: false
         keep_artifacts: false
