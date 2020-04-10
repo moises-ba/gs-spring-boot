@@ -33,47 +33,7 @@ pipelines:
                 - test
                 working_directory: initial
                 run_if: passed
-    - build_docker_image_stage:
-        fetch_materials: true
-        keep_artifacts: false
-        clean_workspace: false
-        approval:
-          type: success
-          allow_only_on_success: false
-        jobs:
-          build_image_job:
-            timeout: 0
-            tasks:
-            - exec:
-                command: docker
-                arguments:
-                - build
-                - -t
-                - moisesba/hello-world:0.0.1
-                - .
-                working_directory: initial
-                run_if: passed
-    - push_docker_image_stage:
-        fetch_materials: true
-        keep_artifacts: false
-        clean_workspace: false
-        approval:
-          type: success
-          allow_only_on_success: false
-        jobs:
-          push_docker_image_job:
-            timeout: 0
-            tasks:
-            - exec:
-                command: docker
-                arguments:
-                - login
-                - -u
-                - moisesba
-                - -p
-                - ${DOCKERHUB_PASS}
-                working_directory: initial
-                run_if: passed 
+    
     - deploy_homologacao_stage:
         fetch_materials: true
         keep_artifacts: false
