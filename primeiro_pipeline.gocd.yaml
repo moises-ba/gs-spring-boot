@@ -15,7 +15,7 @@ pipelines:
     stages:
     - build_stage:
         fetch_materials: true
-        keep_artifacts: false
+        keep_artifacts: true
         clean_workspace: false
         approval:
           type: success
@@ -34,8 +34,8 @@ pipelines:
                 working_directory: initial
                 run_if: passed
     - build_docker_image_stage:
-        fetch_materials: true
-        keep_artifacts: false
+        fetch_materials: false
+        keep_artifacts: true
         clean_workspace: false
         approval:
           type: success
@@ -54,8 +54,8 @@ pipelines:
                 working_directory: initial
                 run_if: passed
     - push_docker_image_stage:
-        fetch_materials: true
-        keep_artifacts: false
+        fetch_materials: false
+        keep_artifacts: true
         clean_workspace: false
         approval:
           type: success
@@ -75,7 +75,7 @@ pipelines:
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
-        fetch_materials: true
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
