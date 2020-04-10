@@ -33,22 +33,6 @@ pipelines:
                 - test
                 working_directory: initial
                 run_if: passed
-            - exec:
-                command: docker
-                arguments:
-                - build
-                - -t
-                - moisesba/hello-world:0.0.1
-                - .
-                working_directory: initial
-                run_if: passed    
-            - exec:
-                command: docker
-                arguments:
-                - push
-                - moisesba/hello-world:0.0.1
-                working_directory: initial
-                run_if: passed 
         build_docker_image_job:
             timeout: 0
             tasks:
