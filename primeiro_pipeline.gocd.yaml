@@ -69,7 +69,7 @@ pipelines:
             - exec:
                 command: bash
                 arguments:
-                - c
+                - -c
                 - "docker login -u moisesba -p $docker_hub_pass"    
                 #- login
                 #- -u
