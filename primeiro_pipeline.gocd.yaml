@@ -71,7 +71,7 @@ pipelines:
                 - -u
                 - moisesba
                 - -p
-                - {{SECRET:[secret_db][dockerhub_pass]}}
+                - "{{SECRET:[secret_db][dockerhub_pass]}}"
                 working_directory: initial
                 run_if: passed    
             - exec:
