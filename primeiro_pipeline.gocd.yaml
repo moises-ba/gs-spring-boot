@@ -45,7 +45,6 @@ pipelines:
                 command: docker
                 arguments:
                 - push
-                - -t
                 - moisesba/hello-world:0.0.1
                 working_directory: initial
                 run_if: passed        
