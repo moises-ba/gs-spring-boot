@@ -73,7 +73,7 @@ pipelines:
                 - -u
                 - moisesba
                 - -p
-                - $docker_hub_pass
+                - ${docker_hub_pass}
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
