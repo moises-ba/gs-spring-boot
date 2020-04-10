@@ -49,7 +49,7 @@ pipelines:
                 - moisesba/hello-world:0.0.1
                 working_directory: initial
                 run_if: passed 
-         build_docker_image_job:
+        build_docker_image_job:
             timeout: 0
             tasks:
             - exec:
