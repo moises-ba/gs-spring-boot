@@ -71,7 +71,7 @@ pipelines:
                 - -u
                 - moisesba
                 - -p
-                - ${DOCKERHUB_PASS}
+                - $DOCKERHUB_PASS
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
