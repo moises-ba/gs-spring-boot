@@ -67,13 +67,15 @@ pipelines:
               docker_hub_pass: "{{SECRET:[secret_db][dockerhub_pass]}}"
             tasks:
             - exec:
-                command: docker
+                command: bash
                 arguments:
-                - login
-                - -u
-                - moisesba
-                - -p
-                - ${docker_hub_pass}
+                - c
+                - "docker login -u moisesba -p $docker_hub_pass"    
+                #- login
+                #- -u
+                #- moises-ba
+                #- -p
+                #- ${docker_hub_pass}
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
