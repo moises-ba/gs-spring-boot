@@ -33,7 +33,7 @@ pipelines:
                 - test
                 working_directory: initial
                 run_if: passed
-        build_docker_image_job:
+          build_docker_image_job:
             timeout: 0
             tasks:
             - exec:
@@ -45,7 +45,7 @@ pipelines:
                 - .
                 working_directory: initial
                 run_if: passed    
-        push_docker_image_job:
+          push_docker_image_job:
             timeout: 0
             tasks:
             - exec:
