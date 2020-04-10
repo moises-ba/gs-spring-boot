@@ -63,6 +63,8 @@ pipelines:
         jobs:
           push_docker_image_job:
             timeout: 0
+            environment_variables:
+              docker_hub_pass: "{{SECRET:[secret_db][dockerhub_pass]}}"
             tasks:
             - exec:
                 command: docker
@@ -71,7 +73,7 @@ pipelines:
                 - -u
                 - moisesba
                 - -p
-                - $DOCKERHUB_PASS
+                - $docker_hub_pass
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
