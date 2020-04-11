@@ -45,12 +45,10 @@ pipelines:
             timeout: 0
             tasks:
             - exec:
-                command: docker
+                command: bash
                 arguments:
-                - build
-                - -t
-                - moisesba/hello-world:0.0.${COUNT}
-                - .
+                - -c
+                - "docker build -t moisesba/hello-world:0.0.${COUNT} ."
                 working_directory: initial
                 run_if: passed
     - push_docker_image_stage:
@@ -79,10 +77,10 @@ pipelines:
                 working_directory: initial
                 run_if: passed 
             - exec:
-                command: docker
+                command: bash
                 arguments:
-                - push
-                - moisesba/hello-world:0.0.${COUNT}                 
+                - -c
+                - "docker push moisesba/hello-world:0.0.${COUNT}"    
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
@@ -97,11 +95,9 @@ pipelines:
             timeout: 0
             tasks:
             - exec:
-                command: docker-compose
+                command: bash
                 arguments:
-                - up
-                - -d
-                - -e
-                - ${COUNT}
+                - -c     
+                - "docker-compose up -d -e ${COUNT}"
                 working_directory: initial
                 run_if: passed
