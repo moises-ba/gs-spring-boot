@@ -98,6 +98,6 @@ pipelines:
                 command: bash
                 arguments:
                 - -c     
-                - "export TAG=0.0.${GO_PIPELINE_COUNTER} && docker-compose --build-arg  up -d "
+                - "export TAG=0.0.${GO_PIPELINE_COUNTER} && docker-compose up -d "
                 working_directory: initial
                 run_if: passed
