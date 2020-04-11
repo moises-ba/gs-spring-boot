@@ -48,7 +48,7 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "docker build -t moisesba/hello-world:0.0.${COUNT} ."
+                - "docker build -t moisesba/hello-world:0.0.${GO_PIPELINE_COUNTER} ."
                 working_directory: initial
                 run_if: passed
     - push_docker_image_stage:
@@ -80,7 +80,7 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "docker push moisesba/hello-world:0.0.${COUNT}"    
+                - "docker push moisesba/hello-world:0.0.${GO_PIPELINE_COUNTER}"    
                 working_directory: initial
                 run_if: passed 
     - deploy_homologacao_stage:
@@ -98,6 +98,6 @@ pipelines:
                 command: bash
                 arguments:
                 - -c     
-                - "docker-compose up -d -e ${COUNT}"
+                - "docker-compose up -d -e ${GO_PIPELINE_COUNTER}"
                 working_directory: initial
                 run_if: passed
