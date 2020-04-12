@@ -2,10 +2,10 @@ format_version: 3
 
 pipelines:
   build_and_publish_image:
-    group: defaultGroup
+    group: hello-world
     label_template: ${COUNT}
-    lock_behavior: none
-    display_order: -1
+    lock_behavior: unlockWhenFinished
+    display_order: 1
     materials:
       git:
         git: https://github.com/moises-ba/gs-spring-boot
@@ -50,3 +50,39 @@ pipelines:
                 - "docker build -t ${dockerhub_user}/hello-world:$GO_PIPELINE_LABEL ."
                 working_directory: initial
                 run_if: passed
+
+  deploy_homologacao:
+    group: hello-world
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: 2
+    materials:
+      upstream:
+        pipeline: build_and_publish_image
+        stage: build_and_publish_image
+        name: upstream
+    stages:
+    - deploy_homologacao:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: true
+        approval:
+          type: success
+        jobs:
+          deploy_homologacao:
+            timeout: 0
+            tasks:
+            - fetch:
+                artifact_id: hello-world
+                pipeline: build_and_publish_image
+                stage: build_and_publish_image
+                job: build_image
+                artifact_origin: external
+                run_if: passed
+            - exec:
+                command: bash
+                arguments:
+                - -c
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d "
+                working_directory: initial
+                run_if: passed 
