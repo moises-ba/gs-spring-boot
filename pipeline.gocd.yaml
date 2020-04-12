@@ -80,14 +80,15 @@ pipelines:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
                 job: build_image
+                artifact_origin: gocd
                 source: docker/docker-compose.yaml
-                #destinatio: initial
+                #dest: initial
             - fetch:
                 artifact_id: hello-world
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
                 job: build_image
-                artifact_origin: gocd
+                artifact_origin: external
                 run_if: passed
             - exec:
                 command: bash
