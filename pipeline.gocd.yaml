@@ -80,7 +80,7 @@ pipelines:
                 stage: build_and_publish_image
                 job: build_image
                 artifact_origin: gocd
-                source: docker/docker-compose.yaml
+                source: docker/*
                 dest: docker
             - exec:
                 command: bash
