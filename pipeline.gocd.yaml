@@ -26,6 +26,9 @@ pipelines:
             environment_variables:
               dockerhub_user: "moisesba"
             artifacts:
+            - build:
+                source: initial/docker-compose.yaml
+                destination: docker    
             - external:
                 id: hello-world
                 store_id: docker_hub
@@ -77,6 +80,13 @@ pipelines:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
                 job: build_image
+                source: docker/docker-compose.yaml
+                #destinatio: initial
+            - fetch:
+                artifact_id: hello-world
+                pipeline: build_and_publish_image
+                stage: build_and_publish_image
+                job: build_image
                 artifact_origin: external
                 run_if: passed
             - exec:
@@ -84,4 +94,5 @@ pipelines:
                 arguments:
                 - -c
                 - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d "
-                run_if: passed 
+                run_if: passed
+                #working_directory: initial 
