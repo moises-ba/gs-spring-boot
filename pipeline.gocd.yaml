@@ -25,10 +25,10 @@ pipelines:
             timeout: 0
             environment_variables:
               dockerhub_user: "moisesba"
-            #artifacts:
-            #- build:
-            #    source: initial/docker-compose.yaml
-            #    destination: docker    
+            artifacts:
+            - build:
+                source: initial/docker-compose.yaml
+                destination: docker    
             #- external:
             #    id: hello-world
             #    store_id: docker_hub
