@@ -94,6 +94,6 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d  -p project"
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj up -d"
                 run_if: passed
                 #working_directory: docker 
