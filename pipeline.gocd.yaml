@@ -87,7 +87,7 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "docker-compose down"
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj down"
                 run_if: passed    
                 #working_directory: docker 
             - exec:
