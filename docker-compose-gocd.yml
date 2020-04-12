@@ -1,0 +1,41 @@
+version: "2.1"
+services:
+  gocd-server:
+    image: gocd/gocd-server-centos-7:v20.1.0
+    ports:
+      - "8153:8153"
+      - "8154:8154"
+    volumes:
+      - "server-vol:/godata"  
+      - "server-vol:/home/go" 
+    networks:
+      - gocd-net
+
+  gocd-agent:
+    #image: gocd/gocd-agent-alpine-3.7:v19.12.0
+    #image: moisesba/gocd-custom-agent:0.0.2
+    image: moisesba/gocd-agent-debian:0.0.1
+    ports:
+      - "8152:8152"
+    volumes:
+      - "agent1-vol:/godata"  
+      - "agent1-vol:/home/go" 
+      - "/var/run/docker.sock:/var/run/docker.sock"  
+    networks:
+      - gocd-net
+    environment:
+      #- AGENT_BOOTSTRAPPER_ARGS='-sslVerificationMode NONE'
+      - GO_SERVER_URL=http://gocd-server:8153/go
+      - AGENT_AUTO_REGISTER_KEY=e47e8195-74be-440d-89a3-4ada2ec38da9
+      #- AGENT_AUTO_REGISTER_RESOURCES=... 
+      #- AGENT_AUTO_REGISTER_ENVIRONMENTS=... 
+      #- AGENT_AUTO_REGISTER_HOSTNAME=... 
+    depends_on:
+      - "gocd-server"
+
+networks:
+  gocd-net:
+
+volumes:
+  server-vol:
+  agent1-vol:
