@@ -87,7 +87,7 @@ pipelines:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
                 job: build_image
-                #esse eh o default artifact_origin: gocd
+                artifact_origin: gocd
                 run_if: passed
             - exec:
                 command: bash
