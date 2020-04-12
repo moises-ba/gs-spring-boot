@@ -76,7 +76,6 @@ pipelines:
             timeout: 0
             tasks:
             - fetch:
-                artifact_id: hello-world
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
                 job: build_image
