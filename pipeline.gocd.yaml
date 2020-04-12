@@ -75,13 +75,6 @@ pipelines:
           deploy_homologacao:
             timeout: 0
             tasks:
-            - exec:
-                command: bash
-                arguments:
-                - -c
-                - "docker-compose down"
-                run_if: passed    
-                #working_directory: docker 
             - fetch:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
@@ -90,6 +83,13 @@ pipelines:
                 is_file: yes
                 source: docker/docker-compose.yaml
                 #dest: docker
+            - exec:
+                command: bash
+                arguments:
+                - -c
+                - "docker-compose down"
+                run_if: passed    
+                #working_directory: docker 
             - exec:
                 command: bash
                 arguments:
