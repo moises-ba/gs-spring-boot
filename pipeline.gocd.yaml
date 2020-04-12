@@ -29,9 +29,10 @@ pipelines:
             - external:
                 id: hello-world
                 store_id: docker_hub
-                options:
-                   Image: ${dockerhub_user}/hello-world    
-                   Tag: ${GO_PIPELINE_LABEL}
+                configuration:
+                   options:
+                      Image: ${dockerhub_user}/hello-world    
+                      Tag: ${GO_PIPELINE_LABEL}
             tasks:
             - exec:
                 command: gradle
