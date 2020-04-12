@@ -25,17 +25,17 @@ pipelines:
             timeout: 0
             environment_variables:
               dockerhub_user: "moisesba"
-            artifacts:
-            - build:
-                source: initial/docker-compose.yaml
-                destination: docker    
-            - external:
-                id: hello-world
-                store_id: docker_hub
-                configuration:
-                   options:
-                      Image: ${dockerhub_user}/hello-world    
-                      Tag: ${GO_PIPELINE_LABEL}
+            #artifacts:
+            #- build:
+            #    source: initial/docker-compose.yaml
+            #    destination: docker    
+            #- external:
+            #    id: hello-world
+            #    store_id: docker_hub
+            #    configuration:
+            #       options:
+            #          Image: ${dockerhub_user}/hello-world    
+            #          Tag: ${GO_PIPELINE_LABEL}
             tasks:
             - exec:
                 command: gradle
@@ -81,18 +81,11 @@ pipelines:
                 job: build_image
                 artifact_origin: gocd
                 source: docker/docker-compose.yaml
-                #dest: initial
-            - fetch:
-                artifact_id: hello-world
-                pipeline: build_and_publish_image
-                stage: build_and_publish_image
-                job: build_image
-                artifact_origin: external
-                run_if: passed
+                dest: docker
             - exec:
                 command: bash
                 arguments:
                 - -c
                 - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d "
                 run_if: passed
-                #working_directory: initial 
+                working_directory: docker 
