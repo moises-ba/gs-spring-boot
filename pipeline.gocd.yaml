@@ -75,6 +75,13 @@ pipelines:
           deploy_homologacao:
             timeout: 0
             tasks:
+            - exec:
+                command: bash
+                arguments:
+                - -c
+                - "docker-compose down"
+                run_if: passed    
+                #working_directory: docker 
             - fetch:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
@@ -87,6 +94,6 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d "
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose up -d  -p project"
                 run_if: passed
                 #working_directory: docker 
