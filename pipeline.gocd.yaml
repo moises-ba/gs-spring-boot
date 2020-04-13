@@ -65,29 +65,25 @@ pipelines:
         stage: build_and_publish_image
         name: upstream
     stages:
-    - promover:
-        approval: 
-          type: manual
-        jobs:
-          promover:
-            #timeout: 0
-            tasks:
-            - exec:
-               run_if: passed
-               command: sh
-               arguments:
-               - -c
-               - "echo Promovendo para homologacao ..."    
     - deploy_homologacao:
         fetch_materials: true
         keep_artifacts: false
         clean_workspace: true
         approval:
-          type: success
+          type: manual
         jobs:
           deploy_homologacao:
             timeout: 0
             tasks:
+            - fetch:
+                options:
+                  environmentVariablePrefix: ''
+                  SkipImagePulling: 'true'
+                pipeline: build_and_publish_image
+                stage: build_and_publish_image
+                job: build_image
+                artifact_id: hello-world
+                artifact_origin: external
             - fetch:
                 pipeline: build_and_publish_image
                 stage: build_and_publish_image
@@ -100,14 +96,14 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj down"
+                - "export IMAGE=${ARTIFACT_IMAGE}  && docker-compose -p prj down"
                 run_if: passed    
                 #working_directory: docker 
             - exec:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj up -d"
+                - "export IMAGE=${ARTIFACT_IMAGE}  && docker-compose -p prj up -d"
                 run_if: passed
                 #working_directory: docker 
 
@@ -155,14 +151,14 @@ pipelines:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj down"
+                - "export IMAGE=${ARTIFACT_IMAGE} && docker-compose -p prj down"
                 run_if: passed    
                 #working_directory: docker 
             - exec:
                 command: bash
                 arguments:
                 - -c
-                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj up -d"
+                - "export IMAGE=${ARTIFACT_IMAGE} && docker-compose -p prj up -d"
                 run_if: passed
                 #working_directory: docker 
 
