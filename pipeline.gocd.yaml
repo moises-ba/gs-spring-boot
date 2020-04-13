@@ -110,3 +110,58 @@ pipelines:
                 - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj up -d"
                 run_if: passed
                 #working_directory: docker 
+
+
+  deploy_producao:
+    group: hello-world
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: 3
+    materials:
+      upstream:
+        pipeline: deploy_homologacao
+        stage: deploy_homologacao
+        name: upstream
+    stages:
+    - deploy_producao:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: true
+        approval:
+          type: manual
+        jobs:
+          deploy_homologacao:
+            timeout: 0
+            tasks:
+            - fetch:
+                options:
+                  environmentVariablePrefix: ''
+                  SkipImagePulling: 'true'
+                pipeline: build_and_publish_image/deploy_homologacao
+                stage: build_and_publish_image
+                job: build_image
+                artifact_origin: external
+                #dest: docker
+            - fetch:
+                pipeline: build_and_publish_image/deploy_homologacao
+                stage: build_and_publish_image
+                job: build_image
+                artifact_origin: gocd
+                is_file: yes
+                source: docker/docker-compose.yaml
+                #dest: docker
+            - exec:
+                command: bash
+                arguments:
+                - -c
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj down"
+                run_if: passed    
+                #working_directory: docker 
+            - exec:
+                command: bash
+                arguments:
+                - -c
+                - "export TAG=${GO_DEPENDENCY_LABEL_UPSTREAM} && docker-compose -p prj up -d"
+                run_if: passed
+                #working_directory: docker 
+
