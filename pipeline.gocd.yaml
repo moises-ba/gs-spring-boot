@@ -65,6 +65,18 @@ pipelines:
         stage: build_and_publish_image
         name: upstream
     stages:
+    - promover:
+        approval: manual
+        jobs:
+          promover:
+          timeout: 0
+          tasks:
+          - exec:
+             run_if: passed
+             command: sh
+             arguments:
+             - -c
+             - "echo Promovendo para homologacao..."    
     - deploy_homologacao:
         fetch_materials: true
         keep_artifacts: false
