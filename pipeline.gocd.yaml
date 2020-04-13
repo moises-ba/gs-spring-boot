@@ -130,7 +130,7 @@ pipelines:
         approval:
           type: manual
         jobs:
-          deploy_homologacao:
+          deploy_producao:
             timeout: 0
             tasks:
             - fetch:
@@ -140,6 +140,7 @@ pipelines:
                 pipeline: build_and_publish_image/deploy_homologacao
                 stage: build_and_publish_image
                 job: build_image
+                artifact_id: hello-world
                 artifact_origin: external
                 #dest: docker
             - fetch:
