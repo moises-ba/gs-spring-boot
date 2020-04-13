@@ -73,11 +73,11 @@ pipelines:
             #timeout: 0
             tasks:
             - exec:
-               #run_if: passed
+               run_if: passed
                command: sh
                arguments:
                - -c
-               - "echo Promovendo para homologacao..."    
+               - "echo Promovendo para homologacao ..."    
     - deploy_homologacao:
         fetch_materials: true
         keep_artifacts: false
