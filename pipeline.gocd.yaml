@@ -70,14 +70,14 @@ pipelines:
           type: manual
         jobs:
           promover:
-          timeout: 0
-          tasks:
-          - exec:
-             run_if: passed
-             command: sh
-             arguments:
-             - -c
-             - "echo Promovendo para homologacao..."    
+            timeout: 0
+            tasks:
+            - exec:
+               run_if: passed
+               command: sh
+               arguments:
+               - -c
+               - "echo Promovendo para homologacao..."    
     - deploy_homologacao:
         fetch_materials: true
         keep_artifacts: false
