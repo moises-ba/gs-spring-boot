@@ -70,10 +70,10 @@ pipelines:
           type: manual
         jobs:
           promover:
-            timeout: 0
+            #timeout: 0
             tasks:
             - exec:
-               run_if: passed
+               #run_if: passed
                command: sh
                arguments:
                - -c
