@@ -57,7 +57,7 @@ pipelines:
   deploy_homologacao:
     group: hello-world
     label_template: ${COUNT}
-    lock_behavior: unlockWhenFinished
+    #apenas uma instancia de pipeline por vez lock_behavior: unlockWhenFinished
     display_order: 2
     materials:
       upstream:
@@ -70,7 +70,7 @@ pipelines:
         keep_artifacts: false
         clean_workspace: true
         approval:
-          type: manual
+          type: manual  
         jobs:
           deploy_homologacao:
             timeout: 0
@@ -111,7 +111,7 @@ pipelines:
   deploy_producao:
     group: hello-world
     label_template: ${COUNT}
-    lock_behavior: unlockWhenFinished
+    #apenas uma instancia de pipeline por vez lock_behavior: unlockWhenFinished
     display_order: 3
     materials:
       upstream:
