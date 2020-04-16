@@ -79,7 +79,7 @@ pipelines:
     materials:
       upstream:
         pipeline: build_and_publish_image
-        stage: build_and_publish_image
+        stage: promove_homologacao
         name: upstream
     stages:
     - deploy_homologacao:
@@ -87,7 +87,7 @@ pipelines:
         keep_artifacts: false
         clean_workspace: true
         approval:
-          type: manual  
+          type: success  
         jobs:
           deploy_homologacao:
             timeout: 0
