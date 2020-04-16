@@ -53,6 +53,23 @@ pipelines:
                 - "docker build -t ${dockerhub_user}/hello-world:$GO_PIPELINE_LABEL ."
                 working_directory: initial
                 run_if: passed
+    - promove_homologacao:
+           fetch_materials: true
+           keep_artifacts: false
+           clean_workspace: true
+           approval:
+             type: manual  
+           jobs:
+             promove_homologacao:
+               timeout: 0
+               tasks:
+               - exec:
+                   command: bash
+                   arguments:
+                   - -c
+                   - "echo promovendo..."
+                   run_if: passed    
+                   #working_directory: docker                 
 
   deploy_homologacao:
     group: hello-world
